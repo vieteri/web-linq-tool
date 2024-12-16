@@ -1,5 +1,15 @@
 import { NextResponse } from 'next/server';
-import axios from 'axios';
+import axios, { AxiosResponse, AxiosError } from 'axios';
+
+interface GeminiResponse {
+  candidates?: {
+    content: {
+      parts: {
+        text: string;
+      }[]
+    }
+  }[]
+}
 
 export async function POST(req: Request) {
   const apiKey = process.env.AI_APIKEY;
@@ -10,7 +20,7 @@ export async function POST(req: Request) {
 
   try {
     const { query } = await req.json();
-    const response = await axios.post(
+    const response: AxiosResponse<GeminiResponse> = await axios.post(
       'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
       {
         contents: [{
@@ -26,23 +36,33 @@ ${query}
 Console output:`
           }]
         }]
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': apiKey,
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'x-goog-api-key': apiKey,
-          },
-        }
+      }
     );
 
-    // Extract only the console output
-    const output = response.data.candidates[0].content.parts[0].text.trim();
+    // Safely extract output with proper type checking
+    const output = response.data.candidates?.[0]?.content.parts[0]?.text.trim() || '';
     
     return NextResponse.json({ output });
-  } catch (error: any) {
+  } catch (error) {
+    // Use type narrowing for error handling
+    if (error instanceof Error) {
+      const axiosError = error as AxiosError;
+      return NextResponse.json({ 
+        error: error.message,
+        details: axiosError.response?.data || 'Unknown error' 
+      }, { status: 500 });
+    }
+
+    // Fallback for unexpected error types
     return NextResponse.json({ 
-      error: error.message,
-      details: error.response?.data || 'Unknown error' 
+      error: 'An unexpected error occurred',
+      details: String(error)
     }, { status: 500 });
   }
 }
