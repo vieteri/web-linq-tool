@@ -22,8 +22,8 @@ const nextConfig: NextConfig = {
       new CopyPlugin({
         patterns: [
           {
-            from: path.resolve(__dirname, 'node_modules/monaco-editor/esm/vs/base/worker'),
-            to: path.resolve(__dirname, 'public/monaco-editor-workers'),
+            from: 'node_modules/monaco-editor/esm/vs/base/worker',
+            to: 'public/monaco-editor-workers',
           },
         ],
       })
