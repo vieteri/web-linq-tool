@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       {
         contents: [{
           parts: [{
-            text: `For the following C# code, generate only the exact console output that would be printed when running the code in .NET 8.0. 
+            text: `For the following C# code, generate only the exact console output that would be printed when running the code in .NET 8.0. Localization settings Finland/Helsinki.
 Simulate Console.WriteLine(), Console.Write(), and any other console output methods. 
 Do not include any additional explanatory text, just the raw console output:
 

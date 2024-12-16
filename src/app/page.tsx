@@ -48,11 +48,11 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
-      <h1 style={{ marginBottom: '20px', color: 'var(--foreground)' }}>Viet Linqpad alternative</h1>
+      <h1 style={{ marginBottom: '20px', color: 'var(--foreground)' }}>Viet Linqpad alternative - Powered by AI</h1>
       <div className="input-output-container">
         <div className="input-container" style={{display: 'flex', flexDirection: 'row', gap: '20px'}}>
           <div style={{flex: 1}}>
-            <h3 style={{ marginTop: '20px', color: 'var(--foreground)' }}>Input</h3>
+            <h3 style={{ marginTop: '20px', color: 'var(--foreground)', fontWeight: 'bold', textAlign: 'center' }}>Input</h3>
             <CodeEditor 
               className="code-editor-container" 
               value={query1} 
@@ -62,7 +62,7 @@ const HomePage = () => {
             />
           </div>
           <div style={{flex: 1}}>
-            <h3 style={{ marginTop: '20px', color: 'var(--foreground)' }}>Output</h3>
+            <h3 style={{ marginTop: '20px', color: 'var(--foreground)', fontWeight: 'bold', textAlign: 'center' }}>Output</h3>
             <CodeEditor 
               className="code-editor-container" 
               value={query2} 
