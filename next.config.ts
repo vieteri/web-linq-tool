@@ -1,7 +1,5 @@
 import { NextConfig } from 'next';
 import withTM from 'next-transpile-modules';
-import path from 'path';
-import CopyPlugin from 'copy-webpack-plugin';
 
 const nextConfig: NextConfig = {
   webpack: (config, { isServer }) => {
@@ -17,17 +15,6 @@ const nextConfig: NextConfig = {
       os: false,
       // Add any other necessary fallbacks here
     };
-
-    config.plugins.push(
-      new CopyPlugin({
-        patterns: [
-          {
-            from: 'node_modules/monaco-editor/esm/vs/base/worker',
-            to: 'public/monaco-editor-workers',
-          },
-        ],
-      })
-    );
 
     if (!isServer) {
       config.output.publicPath = '/_next/';

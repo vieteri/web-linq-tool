@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "copy-workers": "mkdir -p public/monaco-editor-workers && cp -r node_modules/monaco-editor/esm/vs/base/worker/* public/monaco-editor-workers",
+    "build": "npm run copy-workers && next build",
     "start": "next start",
     "lint": "next lint"
   },
