@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { query } = await req.json();
+    const { query, temperature = 0.0 } = await req.json(); // Default temperature to 0.0
     const response: AxiosResponse<GeminiResponse> = await axios.post(
       'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
       {
@@ -35,7 +35,10 @@ ${query}
 
 Console output:`
           }]
-        }]
+        }],
+        generationConfig: { // Add generationConfig
+          temperature: temperature,
+        },
       },
       {
         headers: {
